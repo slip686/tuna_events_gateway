@@ -13,7 +13,7 @@ LOG_FORMAT = '[%(levelname) -3s %(asctime)s] %(message)s'
 logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
 logger = logging.getLogger(__name__)
 
-KAFKA_HOST = os.getenv('KAFKA_HOST') or '192.168.1.6'
+KAFKA_HOST = os.getenv('KAFKA_HOST') or '127.0.0.1'
 KAFKA_PORT = int(os.getenv('KAFKA_PORT') or 9094)
 KAFKA_BOOTSTRAP_SERVERS = [f'{KAFKA_HOST}:{KAFKA_PORT}']
 KAFKA_TOPIC_COMMON_CONFIG = {
