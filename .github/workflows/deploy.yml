@@ -45,23 +45,16 @@ jobs:
             ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
             docker context create remote --docker host=ssh://${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
 
-        - name: Extract metadata (tags, labels) for Docker
-          id: meta
-          uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-          with:
-            images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
-        - name: Log in to the Container registry
-          uses: docker/login-action@v3.0.0
-          with:
-            registry: ${{ env.REGISTRY }}
-            username: ${{ github.actor }}
-            password: ${{ secrets.GITHUB_TOKEN }}
-
-        - name: Docker compose
-          env:
-            IMAGE_REF: ${{ steps.meta.outputs.tags }}
-          run: docker-compose --context remote -f docker-compose.yml up -d
-
-        - name: cleanup
-          run: rm -rf ~/.ssh
+        - name: create docker compose config
+          run: |
+            cat docker-compose.yml | envsubst > docker-compose-secret.yml
+        - name: copy docker compose config
+          run: scp docker-compose-secret.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:docker-compose.yml
+        - name: connect and pull
+          run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker-compose pull && docker-compose up -d && exit"
+        - name: cleanup config
+          if: always()
+          run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "rm docker-compose.yml"
+        - name: cleanup keys
+          if: always()
+          run: rm -rf ~/.ssh docker-compose-secret.yml
