@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  DOCKER_TAG: tuna_events_gateway
+
 jobs:
 
     build:
