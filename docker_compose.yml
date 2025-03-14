@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  tuna_events_gateway:
+    image: ghcr.io/slip686/tuna_events_gateway:latest
+    container_name: tuna_events_gateway
+    restart: always
+    ports:
+      - "3040:3040"
