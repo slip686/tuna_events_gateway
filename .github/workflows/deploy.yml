@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  DOCKER_TAG: tuna_events_gateway
+  DOCKER_TAG: ghcr.io/slip686/tuna_events_gateway
 
 jobs:
 
