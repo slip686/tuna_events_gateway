@@ -27,7 +27,7 @@ jobs:
             docker push ${{ env.DOCKER_TAG }}
 
     deploy:
-      runs-on: ubuntu-22.04
+      runs-on: ubuntu-latest
       environment: production
 
       steps:
