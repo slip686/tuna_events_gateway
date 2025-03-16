@@ -66,7 +66,7 @@ class EventBase:
                  f'{topic}_schema',
                  KAFKA_TOPICS_CONFIG.get(topic).get('class_fields') |
                  {'event_type': (
-                     Literal[KAFKA_TOPICS_CONFIG.get(topic).get('keys')], ...)}
+                     Literal[tuple(KAFKA_TOPICS_CONFIG.get(topic).get('keys'))], ...)}
              ),
              'PRODUCER': KafkaProducer(**KAFKA_TOPICS_CONFIG[topic]['producer_config'])
              })
