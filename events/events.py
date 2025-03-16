@@ -30,6 +30,9 @@ class EventBase:
         cls.PRODUCER.send(topic=cls.TOPIC, value=message, key=event_type.encode('utf-8')).add_callback(
             on_send_success).add_errback(on_send_error)
 
+    def send(self):
+        self.__class__._publish(self.event_type, self.event_data)
+
     @classmethod
     def make_validation_model(cls, name: str, dict_def: dict):
         fields = {}
@@ -42,41 +45,25 @@ class EventBase:
                 raise ValueError(f"Field {field_name}:{value} has invalid syntax")
         return create_model(name, **fields, __base__=BaseModel)
 
-
-class PlaybackEvent(EventBase):
-    TOPIC = 'playback_events'
-    EVENT_KEYS = KAFKA_TOPICS_CONFIG.get(TOPIC).get('keys')
-    VALIDATION_SCHEMA = EventBase.make_validation_model(
-        f'{TOPIC}_schema',
-        KAFKA_TOPICS_CONFIG.get(TOPIC).get('class_fields') |
-        {'event_type': (Literal[tuple(KAFKA_TOPICS_CONFIG.get(TOPIC).get('keys'))], ...)})
-    PRODUCER = KafkaProducer(**KAFKA_TOPICS_CONFIG[TOPIC]['producer_config'])
-
-    def send(self):
-        PlaybackEvent._publish(self.event_type, self.event_data)
-
-
-class PlaylistEvent(EventBase):
-    TOPIC = 'playlist_events'
-    EVENT_KEYS = KAFKA_TOPICS_CONFIG.get(TOPIC).get('keys')
-    VALIDATION_SCHEMA = EventBase.make_validation_model(
-        f'{TOPIC}_schema',
-        KAFKA_TOPICS_CONFIG.get(TOPIC).get('class_fields') |
-        {'event_type': (Literal[tuple(KAFKA_TOPICS_CONFIG.get(TOPIC).get('keys'))], ...)})
-    PRODUCER = KafkaProducer(**KAFKA_TOPICS_CONFIG[TOPIC]['producer_config'])
-
-    def send(self):
-        PlaylistEvent._publish(self.event_type, self.event_data)
+    @classmethod
+    def make_event(cls, name, topic):
+        return type(
+            f'{name}',
+            (cls,),
+            {'TOPIC': topic,
+             'EVENT_KEYS': KAFKA_TOPICS_CONFIG.get(topic).get('keys'),
+             'VALIDATION_SCHEMA': cls.make_validation_model(
+                 f'{topic}_schema',
+                 KAFKA_TOPICS_CONFIG.get(topic).get('class_fields') |
+                 {'event_type': (
+                     Literal[tuple(KAFKA_TOPICS_CONFIG.get(topic).get('keys'))], ...)}
+             ),
+             'PRODUCER': KafkaProducer(**KAFKA_TOPICS_CONFIG[topic]['producer_config'])
+             })
 
 
-class UserAccountEvent(EventBase):
-    TOPIC = 'user_account_events'
-    EVENT_KEYS = KAFKA_TOPICS_CONFIG.get(TOPIC).get('keys')
-    VALIDATION_SCHEMA = EventBase.make_validation_model(
-        f'{TOPIC}_schema',
-        KAFKA_TOPICS_CONFIG.get(TOPIC).get('class_fields') |
-        {'event_type': (Literal[tuple(KAFKA_TOPICS_CONFIG.get(TOPIC).get('keys'))], ...)})
-    PRODUCER = KafkaProducer(**KAFKA_TOPICS_CONFIG[TOPIC]['producer_config'])
+PlaybackEvent = EventBase.make_event('PlaybackEvent', 'playback_events')
 
-    def send(self):
-        UserAccountEvent._publish(self.event_type, self.event_data)
+PlaylistEvent = EventBase.make_event('PlaylistEvent', 'playlist_events')
+
+UserAccountEvent = EventBase.make_event('UserAccountEvent', 'user_account_events')
