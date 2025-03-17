@@ -24,15 +24,3 @@ def connect_routers(app: FastAPI, routers: __import__):
         if name not in ['__init__', '__pycache__']:
             cls = getattr(importlib.import_module(f'routers.{name}'), 'router')
             app.include_router(cls)
-
-
-# def make_validation_model(name: str, dict_def: dict):
-#     fields = {}
-#     for field_name, value in dict_def.items():
-#         if isinstance(value, tuple):
-#             fields[field_name] = value
-#         elif isinstance(value, dict):
-#             fields[field_name] = (make_validation_model(f'{name}_{field_name}', value), ...)
-#         else:
-#             raise ValueError(f"Field {field_name}:{value} has invalid syntax")
-#     return create_model(name, **fields)

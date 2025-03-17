@@ -54,7 +54,7 @@ class EventBase:
         """
         Create new event class inherited from EventBase
         :param name: Event class name
-        :param topic: Topic name
+        :param topic: Topic name from config.KAFKA_TOPICS_CONFIG
         :return: Event class
         """
         return type(

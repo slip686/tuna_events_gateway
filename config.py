@@ -49,8 +49,7 @@ USER_ACCOUNT_FIELDS = {'user_name': (str, ...),
 
 KAFKA_TOPICS_CONFIG = {
     'playback_events': {
-        'keys': ['play', 'pause', 'next', 'previous', 'repeat_one_on',
-                 'repeat_one_off', 'like', 'unlike'],
+        'keys': ['play', 'pause', 'next', 'previous', 'repeat_one_on', 'repeat_one_off', 'like', 'unlike'],
         'producer_config': KAFKA_PRODUCER_COMMON_CONFIG,
         'topic_config': KAFKA_TOPIC_COMMON_CONFIG,
         'class_fields': TRACK_FIELDS | USER_ACCOUNT_FIELDS
