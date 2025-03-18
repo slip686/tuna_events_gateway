@@ -103,3 +103,6 @@ volumes:
   kafka_0_data:
   kafka_1_data:
   kafka_2_data:
+
+networks:
+  kafka-ch:
