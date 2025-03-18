@@ -40,8 +40,7 @@ TRACK_FIELDS = {'track_id': (int, ...),
 PLAYLIST_FIELDS = {'playlist_id': (int, ...),
                    'playlist_name': (str, ...),
                    'owner_id': (int, ...),
-                   'tracks_count': (int, ...),
-                   'tracks': (List[int], ...)}
+                   'track_ids': (List[int], ...)}
 USER_ACCOUNT_FIELDS = {'user_name': (str, ...),
                        'user_gender': (str, ...),
                        'user_age': (int, ...),
