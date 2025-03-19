@@ -20,7 +20,7 @@ class EventBase:
     def __init__(self, user_id: int, event_data: dict):
         self.event_type = event_data.get('event_type')
         self.user_id = user_id
-        self.event_data = event_data | {'timestamp': datetime.datetime.now().timestamp(),
+        self.event_data = event_data | {'timestamp': datetime.datetime.now().isoformat(),
                                         'user_id': self.user_id,
                                         'event_type': self.event_type}
 
