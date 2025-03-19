@@ -32,7 +32,7 @@ class EventBase:
         def on_send_error(excp):
             logger.error('SEND ERROR', exc_info=excp)
 
-        message = json.dumps(event_data)
+        message = json.dumps(event_data).encode('utf-8')
         cls.PRODUCER.send(topic=cls.TOPIC, value=message, key=event_type.encode('utf-8')).add_callback(
             on_send_success).add_errback(on_send_error)
 
