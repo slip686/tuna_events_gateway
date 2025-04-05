@@ -9,8 +9,9 @@ from utils import create_topics, connect_routers
 import routers
 
 sentry_sdk.init(
-    dsn="https://61f234e115e13cf5f11a1c92185bc696@o4509033998909440.ingest.de.sentry.io/4509034287792208",
+    dsn="https://5f6fd4d24c7f4dc80465534425d2e9b2@o4509033998909440.ingest.de.sentry.io/4509099862523984",
     send_default_pii=True,
+    traces_sample_rate=1.0,
 )
 
 app = FastAPI(root_path='/events_gateway', docs_url='/docs', title='Шлюз событий',
