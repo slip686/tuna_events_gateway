@@ -137,6 +137,22 @@ services:
     ports:
       - "3063:3040"
 
+  tuna_events_gateway_4:
+    image: ghcr.io/slip686/tuna_events_gateway:latest
+    container_name: tuna_events_gateway_4
+    restart: always
+    environment:
+      - KAFKA_HOST=kafka-0
+      - KAFKA_PORT=9092
+      - HOST=0.0.0.0
+      - PORT=3040
+    depends_on:
+      - kafka-0
+      - kafka-1
+      - kafka-2
+    ports:
+      - "3064:3040"
+
 volumes:
   kafka_0_data:
   kafka_1_data:

@@ -17,8 +17,8 @@ KAFKA_HOST = os.getenv('KAFKA_HOST') or '192.168.1.6'
 KAFKA_PORT = int(os.getenv('KAFKA_PORT') or 9094)
 KAFKA_BOOTSTRAP_SERVERS = [f'{KAFKA_HOST}:{KAFKA_PORT}']
 KAFKA_TOPIC_COMMON_CONFIG = {
-    'num_partitions': 3,
-    'replication_factor': 3,
+    'num_partitions': 10,
+    'replication_factor': 2,
     'topic_configs': {'cleanup.policy': 'delete',
                       'retention.ms': '86400000',
                       'min.insync.replicas': '2'}
