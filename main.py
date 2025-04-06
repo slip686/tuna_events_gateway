@@ -29,4 +29,4 @@ async def validation_exception_handler(request: Request, exc):
 
 if __name__ == "__main__":
     create_topics()
-    uvicorn.run("main:app", host=HOST, port=PORT, reload=False, workers=3)
+    uvicorn.run("main:app", host=HOST, port=PORT, reload=False, workers=4)
