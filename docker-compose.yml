@@ -75,7 +75,7 @@ services:
 
   tuna_events_gateway_0:
     image: ghcr.io/slip686/tuna_events_gateway:latest
-    container_name: tuna_events_gateway
+    container_name: tuna_events_gateway_0
     restart: always
     environment:
       - KAFKA_HOST=kafka-0
@@ -91,7 +91,7 @@ services:
 
   tuna_events_gateway_1:
     image: ghcr.io/slip686/tuna_events_gateway:latest
-    container_name: tuna_events_gateway
+    container_name: tuna_events_gateway_1
     restart: always
     environment:
       - KAFKA_HOST=kafka-0
@@ -107,7 +107,7 @@ services:
 
   tuna_events_gateway_2:
     image: ghcr.io/slip686/tuna_events_gateway:latest
-    container_name: tuna_events_gateway
+    container_name: tuna_events_gateway_2
     restart: always
     environment:
       - KAFKA_HOST=kafka-0
