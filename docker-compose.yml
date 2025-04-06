@@ -73,7 +73,7 @@ services:
       - KAFKA_CLUSTERS_0_BOOTSTRAP_SERVERS=kafka-0:9092
       - KAFKA_CLUSTERS_0_NAME=kraft
 
-  tuna_events_gateway:
+  tuna_events_gateway_0:
     image: ghcr.io/slip686/tuna_events_gateway:latest
     container_name: tuna_events_gateway
     restart: always
@@ -88,6 +88,38 @@ services:
       - kafka-2
     ports:
       - "3040:3040"
+
+  tuna_events_gateway_1:
+    image: ghcr.io/slip686/tuna_events_gateway:latest
+    container_name: tuna_events_gateway
+    restart: always
+    environment:
+      - KAFKA_HOST=kafka-0
+      - KAFKA_PORT=9092
+      - HOST=0.0.0.0
+      - PORT=3040
+    depends_on:
+      - kafka-0
+      - kafka-1
+      - kafka-2
+    ports:
+      - "3041:3040"
+
+  tuna_events_gateway_2:
+    image: ghcr.io/slip686/tuna_events_gateway:latest
+    container_name: tuna_events_gateway
+    restart: always
+    environment:
+      - KAFKA_HOST=kafka-0
+      - KAFKA_PORT=9092
+      - HOST=0.0.0.0
+      - PORT=3040
+    depends_on:
+      - kafka-0
+      - kafka-1
+      - kafka-2
+    ports:
+      - "3042:3040"
 
 volumes:
   kafka_0_data:
