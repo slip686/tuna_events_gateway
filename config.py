@@ -25,8 +25,7 @@ KAFKA_TOPIC_COMMON_CONFIG = {
 }
 KAFKA_PRODUCER_COMMON_CONFIG = {'bootstrap_servers': KAFKA_BOOTSTRAP_SERVERS,
                                 'retries': 5,
-                                'batch_size': 1000,
-                                'linger_ms': 50}
+                                'batch_size': 1000}
 
 TRACK_FIELDS = {'track_id': (int, ...),
                 'track_year': (int, ...),
