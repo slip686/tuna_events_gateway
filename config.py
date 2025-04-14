@@ -23,6 +23,7 @@ KAFKA_TOPIC_COMMON_CONFIG = {
                       'retention.ms': '86400000',
                       'min.insync.replicas': '2'}
 }
+
 KAFKA_PRODUCER_COMMON_CONFIG = {'bootstrap_servers': KAFKA_BOOTSTRAP_SERVERS,
                                 'retries': 5,
                                 'batch_size': 1000}
